@@ -1,0 +1,11 @@
+Dml - dml is used to manipulate data stored inside the tables
+
+it allow us to :
+add, delete, modify, copy data 
+
+The INSERT statement is used to add new records into a table.
+
+syntax : 
+
+insert into employees(col1,col2,...)
+values ()
