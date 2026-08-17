@@ -1,0 +1,9 @@
+Quick Formula
+
+Requirement	Formula
+
+Increase by 10%	Salary = Salary * 1.10
+Increase by 20%	Salary = Salary * 1.20
+Increase by 5%	Salary = Salary * 1.05
+Decrease by 10%	Salary = Salary * 0.90
+Decrease by 20%	Salary = Salary * 0.80
