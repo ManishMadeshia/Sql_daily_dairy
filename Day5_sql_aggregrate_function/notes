@@ -1,0 +1,29 @@
+aggregrate function perform a calculation on multiple rows and return a single result
+
+example : 
+
+Employee	Salary
+Rahul	50000
+Priya	60000
+Amit	70000
+
+If you want:
+
+Total salary → SUM()
+Average salary → AVG()
+Highest salary → MAX()
+Lowest salary → MIN()
+Total employees → COUNT()
+
+You use aggregate functions
+
+-------------------------
+GROUP BY is used to group rows having the same value in one or more columns.
+
+It is usually used with aggregate functions:
+
+COUNT()
+SUM()
+AVG()
+MIN()
+MAX()
