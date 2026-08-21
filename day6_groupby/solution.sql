@@ -35,4 +35,3 @@ select departmentId, max(salary) as s from employees group by departmentid
 select employeeid, max(amount) as a from orders group by employeeid
 select category, sum(price) as p from products group by category
 
-------------inteview question solution-------------
