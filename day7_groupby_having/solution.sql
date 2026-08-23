@@ -54,4 +54,6 @@ select category, min(price) as min_price from products group by category having 
 
 select departmentid, count(employeeid) as emp_count, avg(salary) as avg_sal  from employees group by departmentid having avg_sal > 55000
 
-
+select departmentid, avg(salary) as avg_sal from employees group by departmentid order by avg_sal desc limit 1
+select customerid, sum(amount) as highest_purchse_amount from orders group by customerid order by highest_purchse_amount desc limit 1
+select employeeid, sum(amount) as total_sale from orders group by employeeid 
