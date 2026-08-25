@@ -39,3 +39,14 @@ select p.productname,sum(os.quantity) as qty from products p left join orderdeta
 select e.employeeid,sum(o.amount) as total_sales from employees e left join orders o on e.employeeid = o.employeeid group by e.employeeid
 select d.departmentname,avg(e.salary) as avg_salary from departments d left join employees e on d.departmentid = e.departmentid group by d.departmentname
 select * from customers c left join orders o on c.customerid = o.customerid where o.orderid is null
+
+
+------------------right join----------------
+
+select * from employees e right join departments d on e.departmentid = d.departmentid
+select * from customers c right join orders o on c.customerid = o.customerid
+select * from orderdetails os right join products p on os.productid = p.productid
+select * from departments d right join employees e on d.departmentid = e.departmentid
+select * from orders o right join customers c on o.customerid = c.customerid
+select * from orderdetails os right join products p on os.productid = p.productid where os.orderid is null
+select * from employees e right join departments d on e.departmentid = d.departmentid 
