@@ -1,0 +1,16 @@
+select * from employees where firstname like 'A%'
+select * from employees where firstname like '%a'
+select * from employees where firstname like '%an%'
+select * from customers where customername like 'A%'
+select * from customers where customername like '%Tech%'
+select * from products where productname like '%e'
+select * from products where productname like '%top%'
+select * from employees where firstname not like 'A%'
+select * from employees where firstname like 'A%n'
+select * from employees where firstname like '_____'
+select * from employees where firstname like 'A____'
+select * from customers where customername like '%ltd%'
+select * from products where productname like 'L%' or ProductName LIKE 'M%';
+select * from products where productname not like '%o%'
+select * from employees where firstname like 'A%r%n'
+
