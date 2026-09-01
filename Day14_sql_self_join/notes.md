@@ -1,0 +1,1 @@
+a self join is a join where a table is joined with itself
