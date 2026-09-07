@@ -35,5 +35,20 @@ select max(salary) from employees)
 select * from employees where salary <(
 select min(salary) from employees)
 
-select * from employees where salary <(
+select * from employees where salary =(
+select max(salary) from employees)
+
+select * from employees where salary = (
 select min(salary) from employees)
+
+select * from employees where salary >(
+select salary from employees where employeeid = 102)
+
+select * from products where price >(
+select price from products where productname = 'Laptop')
+
+
+select firstname, salary from employees where salary >(
+select avg(salary) from employees)
+and
+salary <> (select max(salary) from employees)
