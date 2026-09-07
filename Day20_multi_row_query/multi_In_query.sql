@@ -51,3 +51,4 @@ select * from customers where customerid in(
 select customerid from orders where orderid in(
 select orderid from orderdetails where productid in(
 select Productid from products where category = 'electronics')))
+
