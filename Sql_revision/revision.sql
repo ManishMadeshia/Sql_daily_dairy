@@ -433,5 +433,150 @@ select firstname,salary,
 	end as bonus_percentage
  from employees
  
+-----------------🔥 DML — 10 Practice Questions
 
+Q1 — INSERT
+
+Insert a new employee:
+
+EmployeeID = 112
+FirstName = Rohan
+Salary = 48000
+DepartmentID = 3
+Q2 — INSERT Multiple Rows
+
+Insert these two employees in a single INSERT statement:
+
+113 | Anjali | 62000 | 1
+114 | Sameer | 57000 | 2
+Q3 — UPDATE
+
+Increase the salary of EmployeeID 112 by 12%.
+
+Q4 — UPDATE with Condition
+
+Increase the salary by 10% for all employees whose current salary is below ₹55,000.
+
+Q5 — UPDATE with Multiple Conditions
+
+Increase salary by 15% for employees who:
+
+belong to Department 2
+AND salary is below 60,000
+Q6 — UPDATE Multiple Columns
+
+For EmployeeID 113:
+
+Change salary to 70,000
+Change DepartmentID to 3
+
+Do both changes in one UPDATE statement.
+
+Q7 — DELETE with Condition
+
+Delete all employees whose salary is below ₹45,000.
+
+Q8 — DELETE with Multiple Conditions
+
+Delete employees who:
+
+belong to Department 3
+AND salary is below 50,000
+Q9 — UPDATE using CASE
+
+Give employees a salary increase based on their current salary:
+
+Salary >= 70,000 → 5% increase
+Salary >= 60,000 → 8% increase
+Salary >= 50,000 → 10% increase
+Below 50,000     → 12% increase
+
+Use one UPDATE statement with CASE.
+
+Q10 — Interview-Level DML
+
+Update salaries according to both department and current salary:
+
+Department 1 + Salary < 60,000 → 15% increase
+Department 1 + Salary >= 60,000 → 10% increase
+
+Department 2 + Salary < 60,000 → 12% increase
+Department 2 + Salary >= 60,000 → 8% increase
+
+All other departments → 5% increase
+
+Use one UPDATE statement with CASE.
+
+
+--------------solution------------
+
+insert into employees(employeeid,firstname,salary,departmentid) values(112,'Rohan',48000,3)
+
+insert into employees(employeeid,firstname,salary,departmentid) values(113,"anjali",63000,1),(114,"sameer",57000,2)
+
+update employees
+set salary = salary * 1.12
+where employeeid = 112
+
+update employees
+set salary = salary * 1.10
+where salary < 55000
+
+update employees
+set salary = salary * 1.15
+where departmentid = 2 and salary < 60000
+
+update employees
+set salary = 70000, departmentid = 3
+where employeeid = 113
+
+delete from  employees
+where salary < 45000
+
+delete from  employees
+where departmentid = 3 and salary < 50000
+
+update salary
+case
+	when salary >= 70000 then salary*1.05
+    when salary >= 60000 then salary * 1.08
+    when salary >= 50000 then salary * 1.10
+    else salary * 1.12
+end as salary_increase
+
+---------------Revision 9 — JOINS
+
+
+select e.employeeid,e.firstname,d.departmentname from employees e join departments d on e.departmentid = d.departmentid
+
+select * from employees e left join departments d on e.departmentid = d.departmentid
+
+select d.departmentid,d.departmentname,e.employeeid,e.firstname from departments d left join employees e on d.departmentid = e.departmentid
+
+select * from employees e join departments d on e.departmentid = d.departmentid where e.salary > 60000
+
+
+select d.departmentid,d.departmentname, count(*) as employee_count from employees e join departments d on e.departmentid = d.departmentid group by d.departmentid, d.departmentname
+
+select d.departmentname,avg(e.salary) as average_salary from employees e join departments d on e.departmentid = d.departmentid group by departmentname
+
+
+
+select e.employeeid,e.firstname,d.departmentid from employees e left join departments d on e.departmentid = d.departmentid where d.departmentid is null 
+
+select * from employees
+select e.employeeid,e.firstname as employee , m.firstname as manager,e.salary as employee_salary,m.salary as manager_salary from employees e join employees m on e.managerid = m.employeeid
+
+select e.firstname as emp_name,e.salary as emp_salary,m.firstname as manager_name,m.salary as manager_salary from employees e join employees m on e.managerid = m.employeeid where e.salary > m.salary
+
+select d.departmentname,max(e.salary) as highest_salary from departments d left join employees e on d.departmentid = e.departmentid
+group by d.departmentname 
+
+select * from(
+select d.departmentname,count(*) as emp_count, avg(e.salary) as avg_salary from employees e join departments d on e.departmentid = d.departmentid
+group by d.departmentname ) t where avg_salary > 60000
+
+select e.employeeid,e.firstname,d.departmentname from employees e join departments d on e.departmentid = d.departmentid where d.departmentid in(
+select departmentid from employees group by departmentid having count(*) >= 2
+)
 
