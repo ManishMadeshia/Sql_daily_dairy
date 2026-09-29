@@ -580,3 +580,367 @@ select e.employeeid,e.firstname,d.departmentname from employees e join departmen
 select departmentid from employees group by departmentid having count(*) >= 2
 )
 
+----------------------Revision 10 — UNION & UNION ALL
+Q1
+
+Combine the employee names from both tables into one result.
+
+Q2
+
+Combine the employees from both tables, including duplicate rows.
+
+Q3
+
+Combine employee IDs from both tables but return each ID only once.
+
+Q4
+
+Combine employees from both tables and display:
+
+EmployeeID
+FirstName
+Salary
+Q5
+
+Combine employees from both tables and sort the final result by Salary descending.
+
+Q6
+
+Combine employees from both tables and display only employees whose salary is greater than ₹60,000.
+
+Q7
+
+Combine the FirstName values from both tables and add a column showing the source:
+
+Employees
+IT_Employees
+Q8
+
+Find all employee IDs that exist in both tables.
+
+Q9 — Hard
+
+Combine employees from both tables, remove duplicates, and display only the top 5 highest-paid employees.
+
+Q10 — Interview 🔥
+
+Combine the two tables while keeping duplicate records, then calculate the total number of rows in the final combined result.
+
+
+
+----------------solution---------------
+
+
+select firstname from employees
+union 
+select firstname from IT_employees
+
+select firstname from employees
+union all
+select firstname from IT_employees
+
+select employeeid from employees
+union 
+select employeeid from it_employees
+
+select employeeid,firstname,salary from employees
+union all
+select employeeid,firstname,salary from it_employees
+
+
+select employeeid,firstname,salary from employees
+union all
+select employeeid,firstname,salary from it_employees
+order by salary desc
+
+select employeeid,firstname,salary from employees
+union all
+select employeeid,firstname,salary from it_employees
+where salary > 60000
+
+
+select employeeid,firstname,salary, "employees" as source from employees 
+union all
+select employeeid,firstname,salary, "IT_employees" as source from it_employees 
+
+select employeeid from IT_employees
+intersect
+select employeeid from employees
+
+
+select distinct employeeid,firstname,salary from(
+select employeeid,firstname,salary from employees
+union 
+select employeeid,firstname,salary from it_employees
+) t order by salary desc limit 5
+
+
+select count(*) as total_no_of_row from (
+select employeeid,firstname,salary from employees
+union all 
+select employeeid,firstname,salary from IT_employees
+) t
+
+
+
+
+------------------🔥 PK + Composite Key + AUTO_INCREMENT — 12 Questions
+Q1 — Basic
+
+Create a Students table with:
+
+StudentID → unique identifier
+FirstName
+LastName
+Age
+
+Make sure StudentID cannot be duplicate or NULL.
+
+Q2 — AUTO_INCREMENT
+
+Create an Employees_Practice table with:
+
+EmployeeID
+FirstName
+Salary
+
+The EmployeeID should automatically generate the next number whenever a new employee is inserted.
+
+Q3 — AUTO_INCREMENT Insert
+
+Using your Employees_Practice table, insert:
+
+Manish | 65000
+Rahul  | 55000
+Priya  | 70000
+
+Do not manually provide EmployeeID.
+
+Q4 — Verify AUTO_INCREMENT
+
+Write a query to display all employees ordered by their generated EmployeeID from lowest to highest.
+
+Q5 — Composite Key
+
+Create an OrderDetails_Practice table:
+
+OrderID
+ProductID
+Quantity
+Price
+
+The same OrderID + ProductID combination must not be allowed twice.
+
+Q6 — Understand Composite Key
+
+Suppose this data exists:
+
+OrderID | ProductID
+--------|----------
+101     | 1
+101     | 2
+102     | 1
+
+Can you insert:
+
+101 | 1
+
+Explain why or why not.
+
+Q7 — Composite Key + Other Column
+
+Create a StudentCourses table:
+
+StudentID
+CourseID
+EnrollmentDate
+
+A student can take many courses, and a course can have many students, but the same student cannot enroll in the same course twice.
+
+Design the table correctly.
+
+Q8 — AUTO_INCREMENT + PRIMARY KEY
+
+Create a Products_Practice table:
+
+ProductID
+ProductName
+Price
+CreatedDate
+
+Requirements:
+
+ProductID automatically generates values.
+ProductID uniquely identifies each product.
+ProductName cannot be NULL.
+Price must be greater than 0.
+Q9 — ALTER Existing Table
+
+Suppose you already have:
+
+Employees_Practice(
+    EmployeeID INT,
+    FirstName VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+Write the ALTER TABLE statement to make EmployeeID the primary key.
+
+Q10 — Add AUTO_INCREMENT to Existing PK
+
+Suppose EmployeeID is already a primary key:
+
+EmployeeID INT PRIMARY KEY
+
+Write the ALTER TABLE statement to make it AUTO_INCREMENT.
+
+Q11 — Hard 🔥
+
+Create a SalesDetails table with:
+
+SaleID
+ProductID
+Quantity
+SalePrice
+
+Requirements:
+
+SaleID + ProductID together uniquely identify a row.
+Quantity cannot be NULL.
+SalePrice must be greater than 0.
+
+Design the complete table.
+
+Q12 — Interview Level 🔥🔥
+
+You are designing an OrderDetails table.
+
+One order can contain many products.
+
+For example:
+
+OrderID | ProductID | Quantity
+--------|-----------|---------
+1001    | 5         | 2
+1001    | 8         | 1
+1001    | 10        | 4
+1002    | 5         | 3
+
+Answer these:
+
+A. What should be the primary key?
+B. Should OrderID alone be the primary key? Why/why not?
+C. Should ProductID alone be the primary key? Why/why not?
+D. Write the complete CREATE TABLE statement.
+
+
+-----------------solution------------
+
+create database tmp_pp
+
+use tmp_pp
+
+create table Students(
+studentid int primary key,
+firstname varchar(50),
+lastname varchar(50),
+age tinyint
+)
+
+insert into students values(1,"Manish","Madeshia",22),(2,"anish","Madeshia",24),(3,"Manisha","Madeshia",25)
+select * from students
+
+
+create table employees_practice(
+employeeid int auto_increment primary key,
+firstname varchar(50),
+salary decimal(10,2)
+)
+
+insert into employees_practice(firstname,salary) values("manish",23443),("nahdi",2434)
+
+-------auto increment
+
+insert into employees_practice(firstname,salary) values("dinesh",23432),("ganesh",43435)
+
+select * from employees_practice
+
+-----composite_key-----
+
+create table orderDetails_Practice(
+orderid int not null,
+productid int not null,
+Quantity int,
+Price decimal(10,2),
+primary key(orderid,productid)
+)
+
+insert into orderDetails_Practice(orderid,productid,quantity,price)
+values (1,101,3,333),(1,102,4,343),(1,103,5,444),(2,101,3,222),(2,102,5,666),(2,103,6,334)
+
+select * from orderDetails_Practice
+
+
+create table studentcourse(
+studentid int not null,
+courseid int not null,
+enrollmentDate date,
+primary key(studentid,courseid)
+)
+
+
+insert into studentcourse(studentid,courseid,enrollmentdate) value(101,1,'2026-09-10'),
+(101,2,'2026-09-10'),
+(101,3,'2026-09-10'),
+(101,4,'2026-09-10'),
+(102,1,'2026-09-20'),
+(102,2,'2026-09-20'),
+(102,3,'2026-09-20'),
+(102,4,'2026-09-20'),
+(103,1,'2026-08-10'),
+(103,2,'2026-08-10'),
+(103,3,'2026-08-10'),
+(103,4,'2026-08-10')
+
+select * from studentcourse
+
+
+8. create table product_practice(
+productid int auto_increment primary key,
+productname varchar(50),
+price decimal(10,2) check (price >0),
+createdDate date default (current_date())
+)
+
+insert into product_practice(productname,price,createdDate) 
+value("Mobile",9999,Default),("Mobile case",999,Default),("Mobile charger",899,Default),("Camera",99999,'2026-09-30'),
+("lens",6666,Default)
+
+select * from product_practice
+
+
+9. Alter table employees_practice
+Add primary key (employeeid)
+
+alter table employees_practice
+add constraint Auto_incre
+auto_increment (employeeid)
+
+
+create table SalesDetails(
+salesid int not null,
+productid int not null,
+quantity int not null,
+saleprice decimal(10,2) check (saleprice>0),
+primary key(salesid,productid)
+)
+
+
+create table orderdetails(
+orderid int,
+productid int,
+quantity int,
+primary key(orderid,productid)
+)
+
+
