@@ -944,3 +944,165 @@ primary key(orderid,productid)
 )
 
 
+
+---------------foreign key question---------
+
+'''
+
+Q1
+Create a Departments_Practice table:
+- DepartmentID → INT, Primary Key
+- DepartmentName → VARCHAR(50), NOT NULL
+
+Q2
+Create an Employees_Practice table:
+- EmployeeID → INT, Primary Key
+- FirstName → VARCHAR(50)
+- DepartmentID → INT
+- DepartmentID must reference Departments_Practice.
+
+3.
+Insert these departments:
+1 → IT
+2 → HR
+3 → Finance
+
+4. Insert an employee:
+EmployeeID = 101
+FirstName = Manish
+DepartmentID = 1
+
+
+
+Q5
+Try inserting:
+EmployeeID = 102
+FirstName = Rahul
+DepartmentID = 99
+
+Explain what happens and why.
+
+
+Q6
+Create Projects_Practice:
+- ProjectID → Primary Key
+- ProjectName → NOT NULL
+- DepartmentID
+- DepartmentID must be related to Departments_Practice.
+
+Q7
+Create Employees_Test where:
+- EmployeeID → Primary Key
+- DepartmentID → cannot be NULL
+- DepartmentID must reference Departments_Practice.
+
+Q8
+An existing table Employees_Test already has DepartmentID.
+Add the required relationship with Departments_Practice using an ALTER TABLE.
+
+
+Q9
+Create Orders_Practice:
+- OrderID → Primary Key
+- CustomerID
+- CustomerID must reference Customers
+
+
+Q10
+Create OrderDetails_Practice where:
+- OrderID
+- ProductID
+- Quantity
+- (OrderID, ProductID) → Composite Primary Key
+- OrderID must reference Orders
+- ProductID must reference Products
+
+
+Q11
+Create an employee table where deleting a department automatically deletes all employees belonging to that department.
+
+
+
+Q12 — Interview Level 🎯
+Explain:
+Why is a Foreign Key important in a relational database? What problem can occur if we dont use it?
+
+'''
+
+-------------------solution----------------
+
+1. create table departments_practice(
+	departmentid int primary key,
+    departmentname varchar(50) not null
+)
+
+
+2. create table employee_practice(
+	employeeid int primary key,
+    firstname varchar(50),
+    departmentid int,
+    foreign key(departmentid)
+		references departments_practice(departmentid)
+)
+
+3. insert into departments_practice(departmentid,departmentname)
+values(1,"HR"),(2,"IT"),(3,"SALES"),(4,"Audit")
+
+
+4. insert into employee_practice(employeeid,firstname,departmentid) values(1,"manish",1),(2,"bipin",3),(3,"mohan",2),(4,"savita",4),(5,"dj shah",2)
+
+
+5. value cant be inserted reason departmentid 99 the value which we are inserting is not present in departmentid that why value cant be enter this phenomenal call referential inte
+
+6. create table projects_practice(
+projectid int primary key,
+projectname varchar(50) not null,
+departmentid int,
+foreign key(departmentid)
+references departments_practice(departmentid)
+)
+
+7. create table employees_test(
+employeeid int primary key,
+departmentid int not null,
+foreign key(departmentid)
+references departments_practice(departmentid)
+)
+
+8. alter table employees_test
+add constraint fk_departmentid
+foreign key(departmentid)
+references departments_practice(departmentid)
+
+9. create table orders_practice(
+orderid int primary key,
+customerid int,
+foreign key(customerid)
+references customers(customerid)
+)
+
+10. 
+create table orderDetails_practice(
+orderid int,
+productid int,
+quantity int,
+primary key(orderid,productid),
+foreign key(orderid)
+references orders(orderid),
+foreign key(productid)
+references products(productid)
+)
+
+11. 
+
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Emp_Name VARCHAR(50) NOT NULL,
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID)
+        REFERENCES Departments_Practice(DepartmentID)
+        ON DELETE CASCADE
+);
+
+12. foreign key is a column in table that help us create or mantain relationship with other table eg forign key of the existing table refer to primary key of other tbale
+why imp - it helps us to maintain refernatial intergity meaning the value which are present in primary tbale are only allow to enter the value that exist in primary key of other tbale other value cant be update 
