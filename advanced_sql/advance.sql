@@ -128,7 +128,7 @@ select d.departmentname,da.dept_avg_sal from dept_avg da
 
  ----------------------------CTE + JOIN + WHERE------------------------
 
- Q6
+Q6
 Using a CTE, calculate the average salary of each department.
 Display only departments where average salary > 60,000:
 DepartmentName
