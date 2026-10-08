@@ -1106,3 +1106,4 @@ CREATE TABLE Employees (
 
 12. foreign key is a column in table that help us create or mantain relationship with other table eg forign key of the existing table refer to primary key of other tbale
 why imp - it helps us to maintain refernatial intergity meaning the value which are present in primary tbale are only allow to enter the value that exist in primary key of other tbale other value cant be update 
+
