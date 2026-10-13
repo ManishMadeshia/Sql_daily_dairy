@@ -127,3 +127,92 @@ vowels. Your result cannot contain duplicates.
 
 select city from station where lower(substr(city,1,1)) not in ('a','e','i','o','u') and lower(substr(city,-1,1)) not in ('a','e','i','o','u')
 
+-----------------creating new table - product
+
+Create Table Product(
+product_id int,
+product_name varchar(50),
+unit_price int
+)
+
+Alter Table Product
+Add Primary key(product_id)
+
+Describe Product
+
+---------------------creating new table - sales---------------------
+
+Create Table Sales(
+seller_id int,
+product_id int,
+buyer_id int,
+sale_date date,
+quantity int,
+price int,
+constraint fk_product_id foreign key(product_id)
+references Product(product_id)
+)
+
+
+Describe Sales
+
+Insert into Product Values(1,'S8',1000),(2,'G4',800),(3,'iphone',1400)
+Insert into Sales Values(1,1,1,'2019-01-21',2,2000),(1,2,2,'2019-02-17',1,800),(2,2,3,'2019-06-02',1,800),(3,3,4,'2019-05-13',2,2800)
+
+select * from product
+select * from sales
+
+--17 Write an SQL query that reports the products that were only sold in the first quarter of 2019. That is, between 2019-01-01 and 2019-03-31 inclusive. Return the result table in any order.
+
+select * from product where product_id not in(
+select product_id from sales where sale_date not between '2019-01-01' and '2019-03-31')
+
+-----------creating new tables -view----------------------
+
+create table view(
+article_id int,
+author_id int,
+viewer_id int,
+view_date date
+)
+
+insert into view(article_id,author_id,viewer_id,view_date) values(1,3,5,'2019-08-01'),
+(1,3,6,'2019-08-02'),(2,7,7,'2019-08-01'),(2,7,6,'2019-08-02'),(4,7,1,'2019-07-22'),(3,4,4,'2019-07-21'),
+(3,4,4,'2019-07-21')
+
+describe view
+
+-- 18. Write an SQL query to find all the authors that viewed at least one of their own articles. Return the result table sorted by id in ascending order.
+
+select distinct(author_id) as id from view where author_id = viewer_id order by author_id asc
+
+-------creating delivery table---------
+
+create table if not exists Delivery(
+delivery_id int,
+customer_id int,
+order_date date,
+customer_pref_delivery_date date,
+constraint pk_delivery_id primary key(delivery_id)
+)
+
+insert into Delivery(delivery_id,customer_id,order_date,customer_pref_delivery_date) values(1,1,'2019-08-01','2019-08-02'),
+(2,5,'2019-08-02','2019-08-02'),(3,1,'2019-08-11','2019-08-11'),
+(4,3,'2019-08-24','2019-08-26'),
+(5,4,'2019-08-21','2019-08-22'),
+(6,2,'2019-08-11','2019-08-13');
+
+select * from Delivery
+
+--19 Write an SQL query to find the percentage of immediate orders in the table, rounded to 2 decimal places.
+-- If the customer's preferred delivery date is the same as the order date, then the order is called immediately; otherwise, it is called scheduled.
+
+select Round((sum(if(order_date = customer_pref_delivery_date,1,0)) / count(*)) * 100 ,2) as immediate_percentage from delivery
+
+
+SELECT 
+    ROUND(
+        (SUM(IF(order_date = customer_pref_delivery_date, 1, 0)) / COUNT(*)) * 100, 
+        2
+    ) AS immediate_percentage
+FROM Delivery;
