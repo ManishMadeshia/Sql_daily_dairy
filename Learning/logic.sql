@@ -63,3 +63,22 @@ select product_id, min(sale_date) as earliest_date,max(sale_date) as latest_sale
 having min(sale_date) >= '2019-01-01' and max(sale_date) <= '2019-03-31'
 
 
+--12. Return customers who have never placed an order.
+select * from customers c left join orders o on c.customer_id = o.customer_id
+where o.order_id is null
+
+--13. Employees earning more than every employee in department 2
+select * from employees;
+
+select * from employees where salary > all (
+select salary from employees where department_id = 2)
+
+--why max help - using max we can find maximum salary of person earning in dept 2 as simple then we need to comapre with only max value only 
+select * from employees where salary > (select max(salary) from employees where department_id = 2)
+
+---14 Find products that have at least one sale and no sale outside Q1 2019. Solve using NOT EXISTS.
+
+
+--15 Return customers who have placed at least one order and have no order whose status differs from 'Completed'.
+select * from customers;
+select * from orders;
