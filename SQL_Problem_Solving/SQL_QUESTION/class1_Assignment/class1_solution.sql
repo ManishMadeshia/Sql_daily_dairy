@@ -216,3 +216,18 @@ SELECT
         2
     ) AS immediate_percentage
 FROM Delivery;
+
+
+--20 Write an SQL query to find the team size of each of the employees. Return result table in any order
+
+create table employee(
+employee_id int primary key,
+team_id int
+)
+
+insert into employee value(1,8),(2,8),(3,8),(4,7),(5,9),(6,9)
+
+
+select employee_id, count(*) over(partition by team_id) as team_size from employee order by employee_id
+
+
