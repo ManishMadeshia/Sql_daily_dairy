@@ -227,7 +227,34 @@ team_id int
 
 insert into employee value(1,8),(2,8),(3,8),(4,7),(5,9),(6,9)
 
+------------21
 
 select employee_id, count(*) over(partition by team_id) as team_size from employee order by employee_id
+
+create table if not exists ads(
+ad_id int,
+user_id int,
+action enum('Clicked','Viewed','Ignored'),
+constraint pk primary key(ad_id,user_id)
+)
+
+insert into Ads VALUES
+(1,1,'Clicked'),(2,2,'Clicked'),(3,3,'Viewed'),(5,5,'Ignored'),
+(1,7,'Ignored'),(2,7,'Viewed'),(3,5,'Clicked'),(1,4,'Viewed'),(2,11,'Viewed'),(
+1,2,'Clicked');
+
+
+select * from ads
+show tables
+select * from employee
+
+select employee_id,
+	count(*) over(partition by team_id ) as team_size
+from employee
+order by employee_id
+
+
+
+
 
 
